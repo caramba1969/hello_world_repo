@@ -3,6 +3,7 @@ import logging
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType
+from homeassistant.helpers.discovery import async_load_platform
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,5 +21,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     
     # Log een welkomstbericht
     _LOGGER.warning("🎉 Hello World component succesvol geladen!")
+    
+    # Load the sensor platform
+    if DOMAIN in config:
+        await async_load_platform(hass, "sensor", DOMAIN, {}, config)
     
     return True
